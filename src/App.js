@@ -36,7 +36,6 @@ function App() {
     }
   let available_modes = [IsProfile,IsLogin,IsRegister]  
   let select_profile_mode = available_modes.indexOf(true)
-  console.log(select_profile_mode)
   return (
     <div className="root">
      <NavigationBar openProfile={openProfile} openLogin={openLogin} openRegister={openRegister} openHome={openHome}/>

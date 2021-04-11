@@ -1,9 +1,13 @@
-import React from 'react'
+import ProfileDetails from './ProfileDetails/ProfileDetails'
+import ProfileStreamDetails from './ProfileDetails/ProfileStreamDetails'
+import ProfileVideosDetails from './ProfileDetails/ProfileVideosDetails'
 
 const Profile = () => {
     return (
-        <div className='ProfileBaseContainer'>
-            
+        <div className='ProfileDetailsLayout'>
+            <ProfileDetails/>
+            <ProfileStreamDetails/>
+            <ProfileVideosDetails/>
         </div>
     )
 }
