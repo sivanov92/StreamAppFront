@@ -49,6 +49,8 @@
     width: auto;
     height: 30rem;
     background-color: blue;
+    display: flex;
+    flex-direction: row;
 }
 
 .SelectVideoContainer{
@@ -154,13 +156,16 @@
    min-height: 40vh;
    background-color: blue;
    margin-top: 5vh;
+   display: flex;
+   flex-direction: column;
 }
 #StreamContainer{
     margin: auto;
     width: 60%;
-    min-height: 40vh;
+    min-height: 30vh;
     background-color: blue;
     margin-top: 5vh;
+    text-align: center;
  }
  #VideosContainer{
     margin: auto;
@@ -169,3 +174,72 @@
     background-color: blue;
     margin-top: 5vh;
  }
+
+.general-profile-data{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn{
+    margin: auto;
+    width: 30%;
+}
+.text-input{
+    width: 50%;
+}
+.button-input{
+    width: 50%;
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+}
+.stream{
+  flex:1;
+  background-color: burlywood;
+  border: black 1px solid;
+}
+.stream-main{
+    flex:2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.stream-secondary{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.stream-secondary-container{
+    width: 100%;
+    height: 50%;
+    background-color: brown;
+}
+.stream-primary-container{
+  width: 95%;
+  height: 95%;
+  background-color: cyan;
+}
+
+.arrow{
+    width: 5%;
+    color: white;
+}
+.arrow-left{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.arrow-right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.left-1{
+    margin-left: 1vw;
+}
+.right-1{
+    margin-right: 1vw;
+}

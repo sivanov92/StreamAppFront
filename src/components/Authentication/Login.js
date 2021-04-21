@@ -1,9 +1,10 @@
-import {base_api_route , jwt_api_secret_key} from '.../config.js'
+import {base_api_route , jwt_api_secret_key} from '../../config'
 var jwt = require('jsonwebtoken')
 
 const Login = () => {
+    let jwt_token
     jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
-        var jwt_token = token
+         jwt_token = token
       });
 
     let login_data = {
