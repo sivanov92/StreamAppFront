@@ -47,8 +47,9 @@
 }
 .LiveStreamZone {
     width: auto;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
     height: 30rem;
-    background-color: blue;
     display: flex;
     flex-direction: row;
 }
@@ -71,6 +72,7 @@
     background-color: blanchedalmond;
     width: 15%;
     height: 80%;
+    display: flex;
 }
 .ProfileBaseContainer{
     width: 100%;
@@ -197,14 +199,13 @@
 }
 .stream{
   flex:1;
-  background-color: burlywood;
-  border: black 1px solid;
 }
 .stream-main{
     flex:2;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 .stream-secondary{
     display: flex;
@@ -218,9 +219,12 @@
     background-color: brown;
 }
 .stream-primary-container{
-  width: 95%;
-  height: 95%;
-  background-color: cyan;
+  width: 60vw;
+  height: 100%;
+  background-color: black;
+  position: absolute;
+  box-shadow:  1px 1px 3px 3px #888888;
+
 }
 
 .arrow{
@@ -231,11 +235,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin-left: 3vw;
 }
 .arrow-right{
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-right: 3vw;
 }
 .left-1{
     margin-left: 1vw;
