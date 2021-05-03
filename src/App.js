@@ -42,8 +42,8 @@ function App() {
      {IsProfile === false && IsLogin === false && IsRegister === false ?
       [
        <LiveStreamZone/>,
-       <SelectVideoContainer header='Live Streams'/>,
-       <SelectVideoContainer header='Uploaded Videos' />
+       <SelectVideoContainer  key='stream' header='Live Streams'/>,
+       <SelectVideoContainer key='videos' header='Uploaded Videos' />
       ]
       :
       <ProfileAndAuth mode={select_profile_mode}/>

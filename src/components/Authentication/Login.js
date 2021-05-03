@@ -7,37 +7,32 @@ const Login = () => {
          jwt_token = token
       });
 
+    const loginUser = async(event)=>{
+     event.preventDefault();   
     let login_data = {
-        'email':'email',
-        'password':'password'
-    } // CHANGE VALUES LATER
-
-    const loginUser = async()=>{
-       let response = await fetch(base_api_route+'/login',{
+            'email': `${event.target.email.value}`,
+            'password': `${event.target.password.value}`
+        } 
+    
+       let response = await fetch(base_api_route+'/users/login',{
            method:'POST',
-           mode:'cors',
            headers:{
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt_token}` 
            },
-           data:JSON.stringify(login_data)
-       })
-       if(response.ok){
-        let res_data = await response.json()
-        // LOGIN LOGIC
-       }else{
-           return false
-       }
+           body:JSON.stringify(login_data)
+       }).catch((e) => {console.log(e);});
+
+       console.log(response);
     }
     return (
         <div  id='LoginContainer'>
-            <form className='form' onSubmit={loginUser}>
+            <form className='form' onSubmit={(event) => loginUser(event)}>
                 <div className='form-elements'>
-                <label for="emailField">Email</label>
+                <label htmlFor="emailField">Email</label>
                 <input type='text' name='email' id='emailField'/>
                 </div>
                 <div className='form-elements'>
-                <label for="passwordField">Password</label>
+                <label htmlFor="passwordField">Password</label>
                 <input type='text' name='password' id='passwordField'/>
                 <br/>
                 <input type='submit' name='submit' value='Register' className='button submit'/>

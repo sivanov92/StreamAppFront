@@ -1,6 +1,7 @@
 import React from 'react'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ReactPlayer from 'react-player'
 
 const LiveStreamZone = () => {
     return (
@@ -14,7 +15,6 @@ const LiveStreamZone = () => {
             </div>
             <div className='stream stream-main'>
                <div className='stream-primary-container'>
-
                </div>
             </div>
             <div className='stream stream-secondary'>
