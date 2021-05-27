@@ -1,13 +1,19 @@
 import {base_api_route , jwt_api_secret_key} from '../../config'
+import { useState  } from 'react';
 
 var jwt = require('jsonwebtoken')
 
-const Register = () => {
+const RegisterForm = () => {
     let jwt_token
     jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
        jwt_token = token
       });//Use later    
-
+      let userObj = {
+        "id":"",
+        "firstName":'',
+        "lastName":''
+    };      
+    const [userData, setuserData] = useState(userObj);
     const registerUser = async(event)=>{
        event.preventDefault();
        let login_data = {
@@ -23,11 +29,19 @@ const Register = () => {
             'Content-Type': 'application/json'
            },
            body:JSON.stringify(login_data)
-       }).catch((e)=> {console.log(e);});        
+       }).catch((e)=> {console.log(e);}); 
+       let res =await response.json();
+       if(response.status === 201){
+         setuserData({
+             'id':res.id,
+             'firstName':res.firstName,
+             'lastName':res.lastName
+         });
+       }
     }
 
     return (
-        <div id='RegisterContainer' >
+        <div className='central' >
             <form className='form' method='POST' onSubmit={(event) => registerUser(event)}>
                 <div className='form-elements'>
                 <label htmlFor="firstName">First name :</label>
@@ -52,4 +66,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default RegisterForm

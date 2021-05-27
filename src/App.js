@@ -1,54 +1,55 @@
-import  NavigationBar  from './components/NavigationBar'
-import LiveStreamZone from './components/LiveStreamZone'
-import SelectVideoContainer from './components/SelectVideoContainer'
-import ProfileAndAuth from './components/ProfileAndAuth'
+import  Home  from './components/pages/home';
+import  Profile  from './components/pages/profile';
+import  Login  from './components/pages/login';
+import  Register  from './components/pages/register';
+import  AddVideo  from './components/pages/AddVideo';
+import  UpdateVideo  from './components/pages/UpdateVideo';
+import  UpdateProfileDetails  from './components/pages/UpdateProfileDetails';
 
-import { useState} from 'react'
-import './style.css';
+import config, {base_api_route } from './config';
+
+import {  useEffect} from 'react'
+import './style/style.css';
+import './style/profile.css';
+import './style/video_containers.css';
+import './style/general_style.css';
+import './style/nav.css';
+
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect
+  } from "react-router-dom";
 
 function App() {
-  const [ IsProfile , setIsProfile] = useState(false);
-  const [ IsLogin , setIsLogin] = useState(false);
-  const [ IsRegister , setIsRegister] = useState(false);
-
-  const openProfile = ()=>{
-      setIsProfile(true);
-      setIsLogin(false);
-      setIsRegister(false);
-
-    }
-    const openLogin = ()=>{
-      setIsLogin(true);
-      setIsRegister(false);
-      setIsProfile(false);
-
-    }
-    const openRegister = ()=>{
-      setIsRegister(true);
-      setIsLogin(false);
-      setIsProfile(false);
-
-    }
-    const openHome = ()=>{
-      setIsProfile(false)
-      setIsRegister(false)
-      setIsLogin(false)
-    }
-  let available_modes = [IsProfile,IsLogin,IsRegister]  
-  let select_profile_mode = available_modes.indexOf(true)
+   useEffect(()=>{
+    const fetch_vids = async()=>{
+      let videos = await fetch(config.base_api_route+'/videos',{
+        method:"GET",
+      });
+      let data = await videos.json();
+      console.log(data);
+    };
+ //  fetch_vids();
+  },[]); 
   return (
+    <Router>
     <div className="root">
-     <NavigationBar openProfile={openProfile} openLogin={openLogin} openRegister={openRegister} openHome={openHome}/>
-     {IsProfile === false && IsLogin === false && IsRegister === false ?
-      [
-       <LiveStreamZone/>,
-       <SelectVideoContainer  key='stream' header='Live Streams'/>,
-       <SelectVideoContainer key='videos' header='Uploaded Videos' />
-      ]
-      :
-      <ProfileAndAuth mode={select_profile_mode}/>
-     }
+      <Switch>
+          <Route exact path="/"   component={Home}/>
+          <Route  path="/profile" component={Profile}/>
+          <Route path="/login"    component={Login}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/add-video" component={AddVideo}/>
+          <Route path="/update-video" component={UpdateVideo}/>
+          <Route path="/update-profile">
+            <UpdateProfileDetails firstName='Stan' lastName='Ivanov' email='test@test.eu'/>
+          </Route>
+
+      </Switch>
     </div>
+    </Router>
   );
 }
 

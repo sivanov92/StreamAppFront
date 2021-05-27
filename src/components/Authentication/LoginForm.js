@@ -1,10 +1,17 @@
-import {base_api_route , jwt_api_secret_key} from '../../config'
-var jwt = require('jsonwebtoken')
+import {base_api_route , jwt_api_secret_key} from '../../config';
+import { useState } from 'react';
+var jwt = require('jsonwebtoken');
 
-const Login = () => {
-    let jwt_token
+const LoginForm = () => {
+    let jwt_token;
+    let userObj = {
+        "id":"",
+        "firstName":'',
+        "lastName":''
+    };
+    const [userData , setUserData ] = useState(userObj);
     jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
-         jwt_token = token
+         jwt_token = token;
       });
 
     const loginUser = async(event)=>{
@@ -21,11 +28,17 @@ const Login = () => {
            },
            body:JSON.stringify(login_data)
        }).catch((e) => {console.log(e);});
-
-       console.log(response);
+        let res = await response.json();
+        if(response.status === 200){
+           setUserData({
+               "id":res.id,
+               'firstName':res.firstName,
+               'lastName':res.lastName
+           });
+        }
     }
     return (
-        <div  id='LoginContainer'>
+        <div  className='central'>
             <form className='form' onSubmit={(event) => loginUser(event)}>
                 <div className='form-elements'>
                 <label htmlFor="emailField">Email</label>
@@ -35,11 +48,11 @@ const Login = () => {
                 <label htmlFor="passwordField">Password</label>
                 <input type='text' name='password' id='passwordField'/>
                 <br/>
-                <input type='submit' name='submit' value='Register' className='button submit'/>
+                <input type='submit' name='submit' value='Login' className='button submit'/>
                 </div>
             </form>
         </div>   
          )
 }
 
-export default Login
+export default LoginForm

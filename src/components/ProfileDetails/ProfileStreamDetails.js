@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 
 const ProfileStreamDetails = () => {
     const handleChange = ()=>{
@@ -9,12 +9,16 @@ const ProfileStreamDetails = () => {
     }
     return (
         <div className='profile-elements'>
-            <div id='StreamContainer'>
-            <h3>Stream Key Details</h3>
+            <div id='StreamContainer' className='profile-container'>
+            <div className='form-container'>
+              <h3>Stream Key Details</h3>
+            </div>
              <form  method='POST' onSubmit={handleSubmit}>
                <div className='form-container'>  
                  <input type='text' value='nshsh718s' className='text-input m-auto' onChange={handleChange}/>
-                 <input type='submit' value='Change' className='button-input btn btn-primary m-auto'/>
+               </div>  
+               <div className='form-container'>  
+                 <input type='submit' value='Change' className='button submit'/>
                </div>  
              </form>
             </div>

@@ -1,32 +1,55 @@
+import {
+	BrowserRouter as Router,
+	Link
+  } from "react-router-dom";
+  
 
-function NavigationBar({openProfile,openLogin,openRegister,openHome}) {
+function NavigationBar() {
     return (
+		<Router forceRefresh={true}>
       <div className='Nav'>
-        <div className='NavItems' id='HomeLink' onClick={openHome}>
-		  <h1>
-			Stan Stream
-		  </h1>
-		</div>
+		<Link to='/'>
+            <div className='NavItems' id='HomeLink' >
+		     <h1>
+		    	Stan Stream
+		     </h1>
+	    	</div>
+		</Link>
 		<div className='NavItems' id='NavGap'>
 
 		</div>
-		<div className='NavItems' id='ProfileLink' >
+		<div className='NavItems'>
 			<div className='DropDown'>
-              <h3> Profile</h3>
+			 <div className='ProfileNav'>
+			   <h2>Profile</h2>
+			</div>	
+			    	  
 			  <div className='DropDown-content'>
-               <div className='dd-elements' onClick={openLogin}>
-			   <h4> Login</h4>
+			  <Link to='/login'>
+               <div className='dd-elements'>
+			   <h3> Login</h3>
 			   </div>
-			   <div className='dd-elements' onClick={openRegister}>
-			    <h4> Register</h4>
+			   </Link>
+			   <Link to='/register'>
+			   <div className='dd-elements' >
+			    <h3> Register</h3>
 			   </div>
-			   <div className='dd-elements' onClick={openProfile}>
-			    <h4> Profile</h4>
+			   </Link>
+			   <Link to='/profile'>
+			   <div className='dd-elements' >
+			    <h3> Profile</h3>
 			   </div>
+			   </Link>
+			   <Link to='/logout'>
+			   <div className='dd-elements' >
+			    <h3>LogOut</h3>
+			   </div>
+			   </Link>
 			  </div>
 			</div>
 		</div>
       </div>
+	  </Router>
     );
   }
   

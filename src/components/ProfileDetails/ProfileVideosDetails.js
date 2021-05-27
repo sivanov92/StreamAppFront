@@ -1,38 +1,27 @@
-import React from 'react'
+import {
+  Link
+} from "react-router-dom";
 
 const ProfileVideosDetails = () => {
     return (
         <div className='profile-elements'>
-            <div id='VideosContainer'>
-            <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>            </div>
+            <div id='VideosContainer' className='profile-container'>
+              <div className='video-row'>
+                <div className='video-element'>
+                 <Link to='/add-video'>
+                  <button className='button'>Add Video</button>
+                  </Link> 
+                </div>
+                <div className='video-element'>
+                <Link to='/update-video'>
+                  <button className='button'>Update Video</button>
+                </Link>  
+                </div>
+                <div className='video-element'>
+                  <button type='submit' className='button'>Delete Video</button>
+                </div>
+              </div>
+            </div>
         </div>
     )
 }
