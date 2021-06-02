@@ -4,13 +4,13 @@ import ProfileDetails from '../ProfileDetails/ProfileDetails';
 import ProfileStreamDetails from '../ProfileDetails/ProfileStreamDetails';
 import ProfileVideosDetails from '../ProfileDetails/ProfileVideosDetails';
 
-const Profile = () => {
+const Profile = ({userData,setUserData}) => {
     return (
         <div>
          <NavigationBar/>
-         <ProfileDetails/>
-        <ProfileStreamDetails/>
-        <ProfileVideosDetails/>
+         <ProfileDetails userData = {userData}/>
+        <ProfileStreamDetails userData = {userData} setUserData = { setUserData }/>
+        <ProfileVideosDetails userData = {userData}/>
         </div>
     )
 };

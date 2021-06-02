@@ -2,7 +2,7 @@ import {
     Link
   } from "react-router-dom";
   
-const ProfileDetails = () => {
+const ProfileDetails = ({userData}) => {
     return (
         <div className='profile-elements' >
             <div id='GeneralContainer' className='profile-container'>
@@ -13,15 +13,10 @@ const ProfileDetails = () => {
                  <div className='general-profile-data'>Email </div>
               </div>
               <div className='general-data general'>
-                 <div className='general-profile-data'> Stan</div>
-                 <div className='general-profile-data'> Ivanov</div>
-                 <div className='general-profile-data'> test@test.eu</div>
+                 <div className='general-profile-data'>{userData.firstName}</div>
+                 <div className='general-profile-data'>{userData.lastName}</div>
+                 <div className='general-profile-data'>{userData.email}</div>
               </div>
-              </div>
-              <div className='general-row general-row-button'>
-                <Link to='update-profile'>
-                   <button className='button'>Edit</button>
-                </Link>
               </div>
             </div>
         </div>    

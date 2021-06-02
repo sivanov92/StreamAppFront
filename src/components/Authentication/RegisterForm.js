@@ -1,19 +1,19 @@
 import {base_api_route , jwt_api_secret_key} from '../../config'
-import { useState  } from 'react';
+import { Redirect } from "react-router-dom";
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 var jwt = require('jsonwebtoken')
 
-const RegisterForm = () => {
+const RegisterForm = ({setUserData}) => {
+    const [willRedirect, setWillRedirect] = useState(false)
+    const [cookies, setCookie] = useCookies(['logged_user']);
+
     let jwt_token
     jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
        jwt_token = token
       });//Use later    
-      let userObj = {
-        "id":"",
-        "firstName":'',
-        "lastName":''
-    };      
-    const [userData, setuserData] = useState(userObj);
+      
     const registerUser = async(event)=>{
        event.preventDefault();
        let login_data = {
@@ -32,12 +32,26 @@ const RegisterForm = () => {
        }).catch((e)=> {console.log(e);}); 
        let res =await response.json();
        if(response.status === 201){
-         setuserData({
-             'id':res.id,
-             'firstName':res.firstName,
-             'lastName':res.lastName
-         });
+         res = JSON.parse(res);
+         setUserData({
+            id:res.id,
+            firstName:res.firstName,
+            lastName:res.lastName,
+            StreamKey:res.StreamKey,
+            email:res.email
+        });
+      setCookie('logged_user',{
+            "id":res.id,
+            "firstName":res.firstName,
+            "lastName":res.lastName
+        },{
+            path:'/'
+        });
+         setWillRedirect(true);
        }
+    }
+    if( willRedirect ){
+        return ( <Redirect to="/profile"/> );        
     }
 
     return (
@@ -45,19 +59,19 @@ const RegisterForm = () => {
             <form className='form' method='POST' onSubmit={(event) => registerUser(event)}>
                 <div className='form-elements'>
                 <label htmlFor="firstName">First name :</label>
-                <input type='text' name='firstName' id='firstName'  />
+                <input type='text' name='firstName' id='firstName'  required/>
                 </div>
                 <div className='form-elements'>
                 <label htmlFor="lastName">Last name :</label>
-                <input type='text' name='lastName' id='lastName'  />
+                <input type='text' name='lastName' id='lastName'  required/>
                 </div>
                 <div className='form-elements'>
                 <label htmlFor="email">Email</label>
-                <input type='text' name='email' id='email'  />
+                <input type='text' name='email' id='email'  required/>
                 </div>
                 <div className='form-elements'>
                 <label htmlFor="password">Password</label>
-                <input type='text' name='password' id='password' />
+                <input type='password' name='password' id='password' required/>
                 <br/>
                 <input type='submit' name='submit' value='Register' className='button submit'/>
                 </div>

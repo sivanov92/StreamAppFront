@@ -4,11 +4,10 @@ import  Login  from './components/pages/login';
 import  Register  from './components/pages/register';
 import  AddVideo  from './components/pages/AddVideo';
 import  UpdateVideo  from './components/pages/UpdateVideo';
-import  UpdateProfileDetails  from './components/pages/UpdateProfileDetails';
+import  DeleteVideo  from './components/pages/DeleteVideo';
+import Logout from './components/pages/logout';
 
-import config, {base_api_route } from './config';
-
-import {  useEffect} from 'react'
+import {  useState } from 'react'
 import './style/style.css';
 import './style/profile.css';
 import './style/video_containers.css';
@@ -16,40 +15,56 @@ import './style/general_style.css';
 import './style/nav.css';
 
 import {
-	BrowserRouter as Router,
 	Switch,
-	Route,
-	Redirect
+	Route
   } from "react-router-dom";
 
 function App() {
-   useEffect(()=>{
-    const fetch_vids = async()=>{
-      let videos = await fetch(config.base_api_route+'/videos',{
-        method:"GET",
-      });
-      let data = await videos.json();
-      console.log(data);
-    };
- //  fetch_vids();
-  },[]); 
+   const [user, setUser] = useState({
+     id:null,
+     firstName:null,
+     lastName:null,
+     StreamKey:null
+   });
+
+   const setUserData = (value)=>{
+      setUser(value);
+   }
   return (
-    <Router>
     <div className="root">
       <Switch>
           <Route exact path="/"   component={Home}/>
-          <Route  path="/profile" component={Profile}/>
-          <Route path="/login"    component={Login}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/add-video" component={AddVideo}/>
-          <Route path="/update-video" component={UpdateVideo}/>
-          <Route path="/update-profile">
-            <UpdateProfileDetails firstName='Stan' lastName='Ivanov' email='test@test.eu'/>
+
+          <Route  path="/profile">
+            <Profile userData={user} setUserData={setUserData}/>
           </Route>
+
+          <Route path="/login">
+           <Login setUserData={setUserData}/>
+          </Route>  
+
+          <Route path="/register">
+            <Register setUserData={setUserData}/>
+          </Route> 
+
+          <Route path="/add-video">
+            <AddVideo userData={user}/>
+          </Route>  
+
+          <Route path="/update-video">
+             <UpdateVideo userData={user}/>
+          </Route>  
+
+          <Route path="/delete-video">
+              <DeleteVideo userData={user}/>
+          </Route>  
+
+          <Route path="/logout">
+            <Logout setUserData={setUserData}/>
+          </Route>  
 
       </Switch>
     </div>
-    </Router>
   );
 }
 
