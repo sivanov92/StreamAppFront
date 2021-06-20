@@ -8,20 +8,21 @@ const AddVideo = ({userData}) => {
 
     const createVideo = async(event)=>{
        event.preventDefault();  
+        
        let title = event.target.title.value;
        let file = event.target.file.files[0];
        let author = userData.id;
+
+       let formData = new FormData();
+       formData.append("title",title);
+       formData.append('author',author);
+       formData.append('file',file);
        //Make POST Request
        let response = await fetch(base_api_route+'/videos',{
          method:'POST',
-         body:JSON.stringify({
-           'title':title,
-           'author':author,
-           'file':file
-         })
+         body:formData
        }).catch((e)=>console.log(e));
-       let res_json = await response.json();
-       if(response.status === 201){ 
+       if(response.ok){ 
         setWillRedirect(true);
       }
     };
@@ -32,7 +33,7 @@ const AddVideo = ({userData}) => {
         <div>
             <NavigationBar/>
             <div className='central'>
-              <form className='form' method='POST' onSubmit={(event)=>createVideo(event)}>
+              <form className='form' encType="multipart/form-data" onSubmit={(event)=>createVideo(event)}>
                 <div className='form-elements'>
                   <label htmlFor='title'>
                     Title

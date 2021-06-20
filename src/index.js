@@ -8,11 +8,11 @@ import {
 
 ReactDOM.render(
   <React.StrictMode>
-     <CookiesProvider>
        <Router>
+       <CookiesProvider>
        <App />
+       </CookiesProvider>
        </Router>
-    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

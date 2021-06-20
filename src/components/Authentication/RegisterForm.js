@@ -3,17 +3,17 @@ import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 
-var jwt = require('jsonwebtoken')
+//var jwt = require('jsonwebtoken')
 
 const RegisterForm = ({setUserData}) => {
     const [willRedirect, setWillRedirect] = useState(false)
     const [cookies, setCookie] = useCookies(['logged_user']);
 
-    let jwt_token
+  /*  let jwt_token
     jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
        jwt_token = token
       });//Use later    
-      
+      */
     const registerUser = async(event)=>{
        event.preventDefault();
        let login_data = {
@@ -32,7 +32,6 @@ const RegisterForm = ({setUserData}) => {
        }).catch((e)=> {console.log(e);}); 
        let res =await response.json();
        if(response.status === 201){
-         res = JSON.parse(res);
          setUserData({
             id:res.id,
             firstName:res.firstName,

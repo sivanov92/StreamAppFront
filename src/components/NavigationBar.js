@@ -3,6 +3,10 @@ import {
   } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import NavLink from './NavLink';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
 
 function NavigationBar() {
 	const [cookies, setCookie] = useCookies(['logged_user']);
@@ -16,11 +20,11 @@ function NavigationBar() {
 	}
 	let Links = [];
 	if(isLogged){
-		Links.push(<NavLink url='/profile' header='Profile' key='profile'/>);
-		Links.push(<NavLink url='/logout' header='Logout' key='logout'/>);
+		Links.push(<NavLink url='/profile' header='Profile' key='profile' icon={<PermIdentityIcon/>}/>);
+		Links.push(<NavLink url='/logout' header='Logout' key='logout' icon={<ExitToAppIcon/>}/>);
 	} else {
-		Links.push(<NavLink url='/login' header='Login' key='login'/>);
-		Links.push(<NavLink url='/register' header='Register' key='register'/>);
+		Links.push(<NavLink url='/login' header='Login' key='login' icon={<LockOpenTwoToneIcon/>}/>);
+		Links.push(<NavLink url='/register' header='Register' key='register' icon={<VpnKeyIcon/>}/>);
 	}
 
     return (

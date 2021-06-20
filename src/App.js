@@ -7,7 +7,7 @@ import  UpdateVideo  from './components/pages/UpdateVideo';
 import  DeleteVideo  from './components/pages/DeleteVideo';
 import Logout from './components/pages/logout';
 
-import {  useState } from 'react'
+import {  useState,useEffect } from 'react'
 import './style/style.css';
 import './style/profile.css';
 import './style/video_containers.css';
@@ -20,20 +20,23 @@ import {
   } from "react-router-dom";
 
 function App() {
-   const [user, setUser] = useState({
-     id:null,
-     firstName:null,
-     lastName:null,
-     StreamKey:null
-   });
+  const stored_user = JSON.parse(window.localStorage.getItem('logged_user'));
+   
+   let user_def_value = (stored_user !== null)?stored_user:false;
+
+   const [user, setUser] = useState(user_def_value);
 
    const setUserData = (value)=>{
       setUser(value);
-   }
+   }   
+
   return (
     <div className="root">
       <Switch>
-          <Route exact path="/"   component={Home}/>
+          <Route exact path="/">
+            <Home/>
+          </Route>
+
 
           <Route  path="/profile">
             <Profile userData={user} setUserData={setUserData}/>

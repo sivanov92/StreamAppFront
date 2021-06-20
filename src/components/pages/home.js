@@ -10,7 +10,7 @@ const Home = () => {
         <br/>
         <h1 className='heading c-text'>Live Streams</h1>
         <LiveStreamZone/>,
-        <VideoListingZone key='videos' header='Uploaded Videos' />
+        <VideoListingZone  header='Uploaded Videos' />
         <br/>
         </div>
     )

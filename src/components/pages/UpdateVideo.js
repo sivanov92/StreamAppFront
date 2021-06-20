@@ -6,19 +6,19 @@ import { useState } from 'react';
 const UpdateVideo = () => {
   const [willRedirect, setWillRedirect] = useState(false)
 
-  var videoUID = new URL(window.location.href).searchParams.get('video-uid');
+  var videoID = new URL(window.location.href).searchParams.get('id');
   const updateVideo = async(event)=>{
     event.preventDefault();  
     let title = event.target.title.value;
 
     //Make POST Request
-    let response = await fetch(base_api_route+'/videos/'+videoUID,{
+    let response = await fetch(base_api_route+'/videos/'+videoID,{
       method:'PUT',
       headers:{
         "Content-type":"application/json"
       },
       body:JSON.stringify({
-        "title":title
+        title:title
       })
     }).catch((e)=>console.log(e));
     if(response.status === 200){
@@ -33,9 +33,9 @@ const UpdateVideo = () => {
         <div>
             <NavigationBar/>
             <div className='central'>
-              <form className='form' method='POST' onSubmit={(event)=>updateVideo(event)}>
+              <form className='form' onSubmit={(event)=>updateVideo(event)}>
                <div className='form-elements'>
-                <h2>Update Video #{videoUID}</h2>
+                <h2>Update Video #{videoID}</h2>
                </div>
                 <div className='form-elements'>
                   <label htmlFor='title'>

@@ -38,7 +38,7 @@ input[type=text],input[type=password]{
     cursor: pointer;
 }
 .button:hover{
-    background-color: #AACDE6;
+    background-color: #00008B;
 }
 a{
     text-decoration: none;

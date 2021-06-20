@@ -9,45 +9,69 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;}
 .VideoListingZone{
     width: 100%;
-    background-color: #6699ff;
+    background-color: #00008B;
     text-align: center;
+    color:white;
+    padding-bottom: 50px;
 }
 .VideoListing{
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    width: 100%;
+    grid-template-columns: repeat(4,20%);
     min-height: 25rem;
+    grid-gap: 30px;
+    margin: auto;
 }
 
 .VideoPlayer{
     margin: auto;
-    background-color: blanchedalmond;
     width: 90%;
     height: 60%;
+    position: relative;
+    flex:3;
+    min-height: 20rem;
+    /*padding-top: 56.25%  Player ratio: 100 / (1280 / 720) */
 }
-.VideoPlayer:hover{
-    border-bottom: 10px solid darkmagenta;
-    border-left: 10px solid darkmagenta;
+.react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .player-wrapper{
+      display: flex;
+      flex-direction: column;
+  }
+  .player-meta{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      padding-left: 20px;
+      margin: 20px;
+  }
+  .avatar{
+   height: 3rem;
+   width: 3rem;
+   border-radius: 50%;
+   padding: 2px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-weight: bold;
+   background-color: #569CCE;
+  }
+.text-meta{
+    padding: 5px;
+    margin-left: 15px;
 }
-.arrow{
-    height: inherit;
-    background-color: black;
-    flex: 1;
-    opacity: 0.1;
+.meta-general{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
 }
-.arrow:hover{
-    opacity: 0.4;
+.show-label{
+    text-decoration: underline;
 }
-.arrow-empty{
-    flex:14;
-}
-.carousel-arrows{
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  width: inherit;
-  height: 25rem;
+.show-label:hover{
+    cursor: pointer;
+    color: blue;
 }

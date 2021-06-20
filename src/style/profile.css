@@ -8,6 +8,18 @@
     align-items: center;
     justify-content: center;
 }
+.paginator{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.pages{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.profile-elements:last-child{
+   margin-bottom: 5vh;
+}
 #GeneralContainer{
    padding: 20px;
    margin: auto;
@@ -20,6 +32,8 @@
 }
 .general-row{
     flex: 1;
+    width: 60%;
+    margin: auto;
 }
 .general-row-button{
     margin: auto;
@@ -34,15 +48,10 @@
 .general{
     flex: 1;
     display: flex;
-    align-items: flex-start;
-}
-.general-labels{
-    display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .general-data{
-    display: flex;
-    flex-direction: column;
     font-weight: bold;
     font-size: 30;
 }
@@ -82,7 +91,7 @@
 .video-element{
     flex:1;
 }
-.video-element:nth-child(1){
+.profile-videos-add{
     padding-bottom: 10px;
     border-bottom: black 1px solid;
 }

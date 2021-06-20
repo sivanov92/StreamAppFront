@@ -3,12 +3,14 @@ import { useCookies } from 'react-cookie';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
-var jwt = require('jsonwebtoken');
+//var jwt = require('jsonwebtoken');
 
 const LoginForm = ({setUserData}) => {
     const [cookies, setCookie] = useCookies(['logged_user']);
     const [willRedirect, setWillRedirect] = useState(false)
-    let jwt_token;
+
+    const storage = window.localStorage;
+    //let jwt_token;
 
    /* jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
          jwt_token = token;
@@ -30,7 +32,6 @@ const LoginForm = ({setUserData}) => {
        }).catch((e) => {console.log(e);});
         let res = await response.json();
         if(response.status === 200){
-            res = JSON.parse(res);
            setUserData({
                id:res.id,
                firstName:res.firstName,
@@ -43,9 +44,17 @@ const LoginForm = ({setUserData}) => {
                "firstName":res.firstName,
                "lastName":res.lastName
            },{
-               path:'/'
+               path:'/',
+               maxAge: 15*60 //15 mins
            });
           setWillRedirect(true);
+          storage.setItem('logged_user',JSON.stringify({
+            id:res.id,
+            firstName:res.firstName,
+            lastName:res.lastName,
+            StreamKey:res.StreamKey,
+            email:res.email
+        }));
         }
     }
     if( willRedirect ){

@@ -2,12 +2,13 @@ import {
     Link
   } from "react-router-dom";
   
-const VideoDetailsRow = ({id,title,updated_at,video_url,video_uid}) => {
+const VideoDetailsRow = ({id,title,updated_at,video_uid}) => {
+    let formatted_date = new Date(updated_at).toDateString();
     return (
         <div className='video-row'>
 
          <div className='video-element'>
-          {id}
+          # {id}
         </div>
 
         <div className='video-element'>
@@ -15,19 +16,15 @@ const VideoDetailsRow = ({id,title,updated_at,video_url,video_uid}) => {
         </div>
 
         <div className='video-element'>
-         {updated_at}
-        </div>
-
-        <div className='video-element'>
-         {video_url}
+         {formatted_date}
         </div>
         <div className='video-element'>
-          <Link to={"/update-video?video-uid="+video_uid}>
+          <Link to={"/update-video?id="+id}>
             <button className='button'>Update Video</button>
           </Link>  
           </div>
           <div className='video-element'>
-          <Link to={'/delete-video?video_uid='+video_uid}>
+          <Link to={'/delete-video?id='+id}>
             <button type='submit' className='button'>Delete Video</button>
           </Link>  
           </div>

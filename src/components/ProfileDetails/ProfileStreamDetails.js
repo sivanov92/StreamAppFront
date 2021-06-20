@@ -25,16 +25,21 @@ const ProfileStreamDetails = ({userData,setUserData}) => {
           StreamKey:newKey
         })
       });
-      let res = await response.json();
-      if(response.status === 200 ){
+      if(response.ok){
         setUserData({
-          id:res.id,
-          firstName:res.firstName,
-          lastName:res.lastName,
-          StreamKey:res.StreamKey,
-          email:res.email
-      });
-
+          id:userData.id,
+          firstName : userData.firstName,
+          lastName : userData.lastName,
+          email : userData.email,
+          StreamKey:newKey
+        });
+        window.localStorage.setItem('logged_user',JSON.stringify({
+          id:userData.id,
+          firstName : userData.firstName,
+          lastName : userData.lastName,
+          email : userData.email,
+          StreamKey:newKey
+        }));
       }
     }
     return (
