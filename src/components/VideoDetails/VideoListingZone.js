@@ -4,9 +4,10 @@ import { useState,useEffect } from 'react';
 
 const VideoListingZone = ({header}) => {
     var Containers = [];
+    const PLAYERS = 4;
 
-    const [StreamWindows, setStreamWindows] = useState(4);
-    const [showLabel, setShowLabel] = useState("Show More");
+    const [StreamWindows, setStreamWindows] = useState(PLAYERS);
+    const [showLabel, setShowLabel] = useState("");
     const [videos, setVideos] = useState(false);
 
     const fetchVideos = async()=>{
@@ -19,14 +20,14 @@ const VideoListingZone = ({header}) => {
 
     const showMoreLess = ()=>{
 
-      if(StreamWindows > 4){
-        setStreamWindows(4);
-        setShowLabel('Show More');
+      if(StreamWindows > PLAYERS){
+        setStreamWindows(PLAYERS);
+        setShowLabel('Show Less');
         return;
       }
 
-      setStreamWindows(Math.ceil(videos.length/4) * 4);
-      setShowLabel('Show Less');
+      setStreamWindows(Math.ceil(videos.length/PLAYERS) * PLAYERS);
+      setShowLabel('Show More');
 
     }
 
@@ -35,9 +36,8 @@ const VideoListingZone = ({header}) => {
         fetchVideos().then(result => {
             setVideos(result);
 
-            if(videos.length <= 4){
-              setStreamWindows(4);
-              setShowLabel('');
+            if(videos.length > PLAYERS){
+              setShowLabel('Show More');
               return;
             }
       })
@@ -51,7 +51,7 @@ const VideoListingZone = ({header}) => {
 
       for(let i = 0;i<StreamWindows;i++){
         if(i < videos.length){
-          Containers.push(<VideoPlayer key={i} url={videos[i].file} useAsPlaceholder={false}/>)
+          Containers.push(<VideoPlayer key={i} url={videos[i].file} videoData={videos} useAsPlaceholder={false}/>)
         }  else {
          Containers.push(<VideoPlayer key={i} useAsPlaceholder={true}/>)
         }

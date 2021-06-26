@@ -40,7 +40,7 @@ const Profile = ({userData,setUserData}) => {
          <NavigationBar/>
          <ProfileDetails userData = {userData}/>
         <ProfileStreamDetails userData = {userData} setUserData = { setUserData }/>
-        <ProfileVideosDetails print={video_print}/>
+        <ProfileVideosDetails print={video_print} limit={4}/>
         </div>
     )
 };
