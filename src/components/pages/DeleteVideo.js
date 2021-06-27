@@ -1,19 +1,41 @@
 import {base_api_route } from '../../config';
-import  NavigationBar  from '../NavigationBar';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
-const DeleteVideo = () => {
+const DeleteVideo = ({setMessage}) => {
   const [willRedirect, setWillRedirect] = useState(false)
   var videoID = new URL(window.location.href).searchParams.get('id');
 
     const deleteVideo = async(event)=>{
         event.preventDefault();
+
+        let message_data = {
+          content: 'Deleting video',
+          status : 'message-in-progress'
+        };
+        setMessage(message_data);
+    
         let response = await fetch(base_api_route+'/videos/'+videoID,{
             method:'DELETE'
-        }).catch((e)=>console.log(e));
+        }).catch((e)=>{
+          
+          let message_data_failed = {
+            content: e,
+            status : 'message-failed'
+          };
+          setMessage(message_data_failed);
+
+          console.log(e);
+        });
         if(response.ok){
           setWillRedirect(true);
+
+          let message_data_success = {
+            content: 'Successfully deleted a video',
+            status : 'message-success'
+          };
+          setMessage(message_data_success);
+      
         }
       };
       if( willRedirect ){
@@ -22,7 +44,6 @@ const DeleteVideo = () => {
   
     return (
         <div>
-             <NavigationBar/>
             <div className='central'>
             <form className='form'  onSubmit={(event)=>deleteVideo(event)}>
               <div className='form-elements'>

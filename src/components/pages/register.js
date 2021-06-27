@@ -5,7 +5,6 @@ import NavigationBar from '../NavigationBar';
 const Register = ({setUserData}) => {
     return (
         <div className='register-page'>
-            <NavigationBar/>
             <RegisterForm setUserData={setUserData}/>
         </div>
     )

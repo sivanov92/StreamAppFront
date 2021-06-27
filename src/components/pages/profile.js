@@ -37,7 +37,6 @@ const Profile = ({userData,setUserData}) => {
 
     return (
         <div>
-         <NavigationBar/>
          <ProfileDetails userData = {userData}/>
         <ProfileStreamDetails userData = {userData} setUserData = { setUserData }/>
         <ProfileVideosDetails print={video_print} limit={4}/>

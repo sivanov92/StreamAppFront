@@ -1,14 +1,19 @@
-import  NavigationBar  from '../NavigationBar';
 import {base_api_route } from '../../config';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
-const AddVideo = ({userData}) => {
+const AddVideo = ({userData,setMessage}) => {
   const [willRedirect, setWillRedirect] = useState(false)
 
     const createVideo = async(event)=>{
        event.preventDefault();  
-        
+       
+       let message_data = {
+         content: 'Adding new video',
+         status : 'message-in-progress'
+       };
+       setMessage(message_data);
+
        let title = event.target.title.value;
        let file = event.target.file.files[0];
        let author = userData.id;
@@ -21,8 +26,22 @@ const AddVideo = ({userData}) => {
        let response = await fetch(base_api_route+'/videos',{
          method:'POST',
          body:formData
-       }).catch((e)=>console.log(e));
+       }).catch((e)=>{
+        let message_data_failed = {
+          content: e,
+          status : 'message-failed'
+        };
+        setMessage(message_data_failed);
+        console.log(e); 
+       });
        if(response.ok){ 
+
+        let message_data_sucess = {
+          content: 'Successfully added a new video !',
+          status : 'message-success'
+        };
+        setMessage(message_data_sucess);
+ 
         setWillRedirect(true);
       }
     };
@@ -31,7 +50,6 @@ const AddVideo = ({userData}) => {
   }
     return (
         <div>
-            <NavigationBar/>
             <div className='central'>
               <form className='form' encType="multipart/form-data" onSubmit={(event)=>createVideo(event)}>
                 <div className='form-elements'>
