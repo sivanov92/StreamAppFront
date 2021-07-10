@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 //var jwt = require('jsonwebtoken');
 
-const LoginForm = ({setUserData}) => {
+const LoginForm = ({setUserData,setMessage}) => {
     const [cookies, setCookie] = useCookies(['logged_user']);
     const [willRedirect, setWillRedirect] = useState(false)
 
@@ -17,21 +17,35 @@ const LoginForm = ({setUserData}) => {
       });*/
 
     const loginUser = async(event)=>{
-     event.preventDefault();   
-    let login_data = {
+        event.preventDefault();   
+
+        let login_data = {
             'email': `${event.target.email.value}`,
             'password': `${event.target.password.value}`
         } 
-    
+
+        let message_data = {
+            content: 'Processing user login !',
+            status : 'message-in-progress'
+          };
+          setMessage(message_data);
+   
        let response = await fetch(base_api_route+'/users/login',{
            method:'POST',
            headers:{
             'Content-Type': 'application/json',
            },
            body:JSON.stringify(login_data)
-       }).catch((e) => {console.log(e);});
+       }).catch((e) => {
+           console.log(e);
+           let message_data_failed = {
+            content: e,
+            status : 'message-failed'
+          };
+          setMessage(message_data_failed);
+        });
         let res = await response.json();
-        if(response.status === 200){
+        if(response.ok){
            setUserData({
                id:res.id,
                firstName:res.firstName,
@@ -55,6 +69,19 @@ const LoginForm = ({setUserData}) => {
             StreamKey:res.StreamKey,
             email:res.email
         }));
+
+        let message_data_success = {
+            content: 'Successfull user login !',
+            status : 'message-success'
+          };
+          setMessage(message_data_success);
+        } else {
+            let message_data_failed = {
+                content: 'Failed user login !',
+                status : 'message-failed'
+              };
+              setMessage(message_data_failed);
+    
         }
     }
     if( willRedirect ){

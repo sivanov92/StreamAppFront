@@ -32,7 +32,11 @@
    margin-top: 5vh;
    display: flex;
    flex-direction: column;
-   background-color: #b3ccff;
+   background-color: #ADD8E6;
+}
+
+#GeneralContainer:hover{
+    background-color: #b3ccff;
 }
 .general-row{
     flex: 1;
@@ -68,8 +72,11 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    background-color: #b3ccff;
+    background-color: #ADD8E6;
   }
+  #StreamContainer:hover{
+    background-color: #b3ccff;
+}
  #VideosContainer{
     padding: 20px;
     margin: auto;
@@ -79,8 +86,11 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    background-color: #b3ccff;
+    background-color: #ADD8E6;
  }
+ #VideosContainer:hover{
+    background-color: #b3ccff;
+}
  .profile-container{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
  }

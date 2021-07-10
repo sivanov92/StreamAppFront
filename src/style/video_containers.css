@@ -16,12 +16,16 @@
 }
 .VideoListing{
     display: grid;
-    grid-template-columns: repeat(4,20%);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     min-height: 25rem;
     grid-gap: 30px;
-    margin: auto;
+    margin-top: 30px;
 }
 
+.VideoListingZone h3{
+    font-weight: bold;
+    font-size: 25px;
+}
 .VideoPlayer{
     margin: auto;
     width: 90%;

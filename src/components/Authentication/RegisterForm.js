@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 
 //var jwt = require('jsonwebtoken')
 
-const RegisterForm = ({setUserData}) => {
+const RegisterForm = ({setUserData,setMessage}) => {
     const [willRedirect, setWillRedirect] = useState(false)
     const [cookies, setCookie] = useCookies(['logged_user']);
 
@@ -16,12 +16,20 @@ const RegisterForm = ({setUserData}) => {
       */
     const registerUser = async(event)=>{
        event.preventDefault();
+
        let login_data = {
         'firstName': `${event.target.firstName.value}`,
         'lastName': `${event.target.lastName.value}`,
         'email':    `${event.target.email.value}`,
         'password':  `${event.target.password.value}`
        }; 
+
+       let message_data = {
+        content: 'Processing user register !',
+        status : 'message-in-progress'
+      };
+      setMessage(message_data);
+
        let register_endpoint = base_api_route+'/users/register';
        let response = await fetch(register_endpoint,{
            method:'POST',
@@ -29,9 +37,17 @@ const RegisterForm = ({setUserData}) => {
             'Content-Type': 'application/json'
            },
            body:JSON.stringify(login_data)
-       }).catch((e)=> {console.log(e);}); 
+       }).catch((e)=> {
+           console.log(e);
+           
+           let message_data_failed = {
+            content: 'Failed user registration !',
+            status : 'message-failed'
+          };
+          setMessage(message_data_failed);
+        }); 
        let res =await response.json();
-       if(response.status === 201){
+       if(response.ok){
          setUserData({
             id:res.id,
             firstName:res.firstName,
@@ -47,6 +63,19 @@ const RegisterForm = ({setUserData}) => {
             path:'/'
         });
          setWillRedirect(true);
+
+         let message_data_success = {
+            content: 'Successfull user registration !',
+            status : 'message-success'
+          };
+          setMessage(message_data_success);
+       } else {
+        let message_data_failed = {
+            content: 'Failed user registration !',
+            status : 'message-failed'
+          };
+          setMessage(message_data_failed);
+
        }
     }
     if( willRedirect ){

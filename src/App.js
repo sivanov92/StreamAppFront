@@ -69,11 +69,11 @@ function App() {
           </Route>
 
           <Route path="/login">
-           <Login setUserData={setUserData}/>
+           <Login setUserData={setUserData} setMessage={setMsgData}/>
           </Route>  
 
           <Route path="/register">
-            <Register setUserData={setUserData}/>
+            <Register setUserData={setUserData} setMessage={setMsgData}/>
           </Route> 
 
           <Route path="/add-video">
