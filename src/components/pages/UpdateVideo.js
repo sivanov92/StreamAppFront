@@ -1,4 +1,4 @@
-import {base_api_route } from '../../config';
+import {base_api_route , jwt_api_secret_key} from '../../config';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
@@ -10,40 +10,48 @@ const UpdateVideo = ({setMessage}) => {
     event.preventDefault();  
     let title = event.target.title.value;
 
-    let message_data = {
-      content: 'Updating video',
-      status : 'message-in-progress'
-    };
-    setMessage(message_data);
+    setMessage({
+      content: 'Updating a video !',
+      type : 'progress' 
+     });
 
     //Make POST Request
     let response = await fetch(base_api_route+'/videos/'+videoID,{
       method:'PUT',
       headers:{
-        "Content-type":"application/json"
+        "Content-type":"application/json",
+        'Authorization':`Bearer ${jwt_api_secret_key}`
       },
       body:JSON.stringify({
         title:title
       })
     }).catch((e)=>{
-      let message_data_failed = {
+      setMessage({
         content: e,
-        status : 'message-failed'
-      };
-      setMessage(message_data_failed);
+        type : 'fail' 
+       });
 
       console.log(e);
     });
-    if(response.status === 200){
-      setWillRedirect(true);
 
-      let message_data_success = {
-        content: 'Successfully updated a  video',
-        status : 'message-success'
-      };
-      setMessage(message_data);
-  
-    }
+    let res = await response.json();
+
+    if(response.ok){
+      
+      if(res.error){
+        setMessage({
+            content: res.error ,
+            type : 'fail' 
+           });
+        return;
+       } 
+
+      setWillRedirect(true);
+      setMessage({
+        content: 'Successfully updated a video !',
+        type : 'success' 
+       });
+    } 
  };
  if( willRedirect ){
   return ( <Redirect to="/profile"/> );        

@@ -1,21 +1,19 @@
 import {
 	Link
   } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import NavLink from './NavLink';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
 
-function NavigationBar() {
-	const [cookies, setCookie] = useCookies(['logged_user']);
+function NavigationBar({userData}) {
 	var isLogged = false;
 	var userNameForShow ;
 	var profileHeader = 'Profile';
-	if(cookies.logged_user !== undefined){
+	if(userData){
 		isLogged = true;
-		userNameForShow = cookies.logged_user.firstName.charAt(0)+'.'+cookies.logged_user.lastName;
+		userNameForShow = userData.firstName.charAt(0).toLowerCase()+'.'+userData.lastName.toLowerCase();
 		profileHeader = userNameForShow;
 	}
 	let Links = [];

@@ -3,7 +3,7 @@ import  NavigationBar  from '../NavigationBar';
 import ProfileDetails from '../ProfileDetails/ProfileDetails';
 import ProfileStreamDetails from '../ProfileDetails/ProfileStreamDetails';
 import ProfileVideosDetails from '../ProfileDetails/ProfileVideosDetails';
-import {base_api_route } from '../../config';
+import {base_api_route,  jwt_api_secret_key } from '../../config';
 import VideoDetailsRow from '../ProfileDetails/VideoDetailsRow';
 import {
   Link
@@ -12,22 +12,28 @@ import {
 const Profile = ({userData,setUserData}) => {
 
   const PAGE_LIMIT = 4;
+  const [videos, setVideos] = useState([]);
 
   var current_page = new URL(window.location.href).searchParams.get('page');
   if(!current_page){
     current_page = 1;
   }
 
-  const [videos, setVideos] = useState([]);
     const getVideos = async()=>{
-        let response = await fetch(base_api_route+'/videos/author/'+userData.id);
+        let response = await fetch(base_api_route+'/videos/author/'+userData.id, {
+          method : 'GET',
+          headers : {
+            'Authorization':`Bearer ${jwt_api_secret_key}`
+          }
+        });
         if(response.ok){
           return await response.json();
         }
       }
 
     useEffect(()=>{
-      getVideos().then(result => {
+      if(userData){
+       getVideos().then(result => {
         let video_print = [];   
         for(let element of result){
           video_print.push(<VideoDetailsRow id={element.id} title={element.title} 
@@ -36,8 +42,13 @@ const Profile = ({userData,setUserData}) => {
           }  
           setVideos(video_print); 
       });
+     } 
     },[]); 
       
+    if(!userData){
+      return (<h2>No user is logged !</h2>);     
+    }
+
      var video_print = [];
      var pages_print = [];
 

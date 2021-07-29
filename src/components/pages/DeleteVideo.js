@@ -1,4 +1,4 @@
-import {base_api_route } from '../../config';
+import {base_api_route,jwt_api_secret_key } from '../../config';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
@@ -9,33 +9,43 @@ const DeleteVideo = ({setMessage}) => {
     const deleteVideo = async(event)=>{
         event.preventDefault();
 
-        let message_data = {
-          content: 'Deleting video',
-          status : 'message-in-progress'
-        };
-        setMessage(message_data);
-    
+        setMessage({
+          content: 'Deleting a video !',
+          type : 'progress' 
+         });
+  
         let response = await fetch(base_api_route+'/videos/'+videoID,{
-            method:'DELETE'
+            method:'DELETE',
+            headers : {
+              'Authorization':`Bearer ${jwt_api_secret_key}`
+            }
         }).catch((e)=>{
           
-          let message_data_failed = {
+          setMessage({
             content: e,
-            status : 'message-failed'
-          };
-          setMessage(message_data_failed);
+            type : 'fail' 
+           });
 
           console.log(e);
         });
+
+        let res = await response.json();
+
         if(response.ok){
+          if(res.error){
+            setMessage({
+                content: res.error ,
+                type : 'fail' 
+               });
+            return;
+           } 
+
           setWillRedirect(true);
 
-          let message_data_success = {
-            content: 'Successfully deleted a video',
-            status : 'message-success'
-          };
-          setMessage(message_data_success);
-      
+          setMessage({
+            content: 'Successfully deleted a video !',
+            type : 'success' 
+           });
         }
       };
       if( willRedirect ){

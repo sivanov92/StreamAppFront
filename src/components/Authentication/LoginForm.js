@@ -1,20 +1,11 @@
 import {base_api_route , jwt_api_secret_key} from '../../config';
-import { useCookies } from 'react-cookie';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
-//var jwt = require('jsonwebtoken');
-
 const LoginForm = ({setUserData,setMessage}) => {
-    const [cookies, setCookie] = useCookies(['logged_user']);
     const [willRedirect, setWillRedirect] = useState(false)
 
     const storage = window.localStorage;
-    //let jwt_token;
-
-   /* jwt.sign({ foo: 'bar' }, jwt_api_secret_key, { algorithm: 'RS256' }, function(err, token) {
-         jwt_token = token;
-      });*/
 
     const loginUser = async(event)=>{
         event.preventDefault();   
@@ -23,29 +14,34 @@ const LoginForm = ({setUserData,setMessage}) => {
             'email': `${event.target.email.value}`,
             'password': `${event.target.password.value}`
         } 
-
-        let message_data = {
-            content: 'Processing user login !',
-            status : 'message-in-progress'
-          };
-          setMessage(message_data);
+          setMessage({
+           content: 'Processing user login !',
+           type : 'progress' 
+          });
    
        let response = await fetch(base_api_route+'/users/login',{
            method:'POST',
            headers:{
             'Content-Type': 'application/json',
+            'Authorization':`Bearer ${jwt_api_secret_key}`
            },
            body:JSON.stringify(login_data)
        }).catch((e) => {
            console.log(e);
-           let message_data_failed = {
+          setMessage({
             content: e,
-            status : 'message-failed'
-          };
-          setMessage(message_data_failed);
+            type : 'fail' 
+           });        
         });
         let res = await response.json();
         if(response.ok){
+           if(res.error){
+            setMessage({
+                content: res.error ,
+                type : 'fail' 
+               });
+            return;
+           } 
            setUserData({
                id:res.id,
                firstName:res.firstName,
@@ -53,14 +49,7 @@ const LoginForm = ({setUserData,setMessage}) => {
                StreamKey:res.StreamKey,
                email:res.email
            });
-           setCookie('logged_user',{
-               "id":res.id,
-               "firstName":res.firstName,
-               "lastName":res.lastName
-           },{
-               path:'/',
-               maxAge: 15*60 //15 mins
-           });
+
           setWillRedirect(true);
           storage.setItem('logged_user',JSON.stringify({
             id:res.id,
@@ -70,19 +59,11 @@ const LoginForm = ({setUserData,setMessage}) => {
             email:res.email
         }));
 
-        let message_data_success = {
+          setMessage({
             content: 'Successfull user login !',
-            status : 'message-success'
-          };
-          setMessage(message_data_success);
-        } else {
-            let message_data_failed = {
-                content: 'Failed user login !',
-                status : 'message-failed'
-              };
-              setMessage(message_data_failed);
-    
-        }
+            type : 'success' 
+           });
+         }
     }
     if( willRedirect ){
         return ( <Redirect to="/profile"/> );        

@@ -1,13 +1,11 @@
-import {base_api_route } from '../../config';
-import { useCookies } from 'react-cookie';
+import {base_api_route , jwt_api_secret_key } from '../../config';
 
 const ProfileStreamDetails = ({userData,setUserData}) => {
-  const [cookies, setCookie] = useCookies(['logged_user']);
 
   var userID ;
   var streamKey;
 
-  if(cookies.logged_user !== undefined){
+  if(userData){
      streamKey = userData.StreamKey;
      userID = userData.id;
   }
@@ -19,7 +17,8 @@ const ProfileStreamDetails = ({userData,setUserData}) => {
       let response = await fetch(base_api_route+'/users/'+userID,{
         method:'PUT',
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization':`Bearer ${jwt_api_secret_key}`
         },
         body:JSON.stringify({
           StreamKey:newKey

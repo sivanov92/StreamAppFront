@@ -24,7 +24,7 @@ import {
 function App() {
   const stored_user = JSON.parse(window.localStorage.getItem('logged_user'));
    
-   let user_def_value = (stored_user !== null)?stored_user:false;
+   let user_def_value = (stored_user) ? stored_user : false;
 
    const [user, setUser] = useState(user_def_value);
 
@@ -34,7 +34,7 @@ function App() {
       setUser(value);
    }   
 
-   const MESSAGE_TIME = 10000;
+  const MESSAGE_TIME = 10000;
   const setMsgData = (value)=>{
      setMessage(value);
 
@@ -45,17 +45,15 @@ function App() {
   if( message ){
 
     let message_content = message.content;
-    let message_status  = message.status;
+    let message_type  = message.type;
     
-    if(message_content !== undefined && message_status !== undefined){
       message_component = (
-          <Message content={message_content} content_class={message_status}/>
+          <Message content={message_content} type={message_type}/>
         );    
-    }
   }
   return (
     <div className="root">
-     <NavigationBar/>
+     <NavigationBar userData={user}/>
      { message_component }
 
       <Switch>
@@ -89,7 +87,7 @@ function App() {
           </Route>  
 
           <Route path="/logout">
-            <Logout setUserData={setUserData}/>
+            <Logout setUserData={setUserData} setMessage={setMsgData}/>
           </Route>  
 
       </Switch>

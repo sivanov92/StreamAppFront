@@ -1,10 +1,13 @@
-import { useCookies } from 'react-cookie';
 import { Redirect } from "react-router-dom";
 
-const Logout = () => {
-    const [cookies, setCookie,removeCookie] = useCookies(['logged_user']);
-    removeCookie('logged_user');
-    return ( <Redirect to="/"/> );        
+const Logout = ({ setUserData , setMessage }) => {
+    setUserData(false);
+    window.localStorage.setItem('logged_user', false);
+    setMessage({
+        content: 'Logged out !',
+        type : 'success' 
+       });
+    return ( <Redirect to="/login"/> );        
 }
 
 export default Logout;

@@ -1,4 +1,4 @@
-import {base_api_route } from '../../config';
+import {base_api_route,jwt_api_secret_key } from '../../config';
 import { Redirect } from "react-router-dom";
 import { useState } from 'react';
 
@@ -8,11 +8,10 @@ const AddVideo = ({userData,setMessage}) => {
     const createVideo = async(event)=>{
        event.preventDefault();  
        
-       let message_data = {
-         content: 'Adding new video',
-         status : 'message-in-progress'
-       };
-       setMessage(message_data);
+       setMessage({
+        content: 'Adding a new video !',
+        type : 'progress' 
+       });
 
        let title = event.target.title.value;
        let file = event.target.file.files[0];
@@ -25,25 +24,35 @@ const AddVideo = ({userData,setMessage}) => {
        //Make POST Request
        let response = await fetch(base_api_route+'/videos',{
          method:'POST',
-         body:formData
+         body:formData,
+         headers : {
+          'Authorization':`Bearer ${jwt_api_secret_key}`
+         }
        }).catch((e)=>{
-        let message_data_failed = {
+        setMessage({
           content: e,
-          status : 'message-failed'
-        };
-        setMessage(message_data_failed);
-        console.log(e); 
+          type : 'fail' 
+         });
+      console.log(e); 
        });
-       if(response.ok){ 
 
-        let message_data_sucess = {
+       let res = await response.json();
+
+       if(response.ok){ 
+        if(res.error){
+          setMessage({
+              content: res.error ,
+              type : 'fail' 
+             });
+          return;
+         } 
+        setMessage({
           content: 'Successfully added a new video !',
-          status : 'message-success'
-        };
-        setMessage(message_data_sucess);
- 
+          type : 'success' 
+         });
+
         setWillRedirect(true);
-      }
+      } 
     };
     if( willRedirect ){
       return ( <Redirect to="/profile"/> );        

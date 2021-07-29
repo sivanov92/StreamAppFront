@@ -1,6 +1,7 @@
 import VideoPlayer from './VideoPlayer'
 import {base_api_route } from '../../config';
 import { useState,useEffect } from 'react';
+import { jwt_api_secret_key  } from '../../config';
 
 const VideoListingZone = ({header}) => {
     var Containers = [];
@@ -11,8 +12,14 @@ const VideoListingZone = ({header}) => {
     const [videos, setVideos] = useState(false);
 
     const fetchVideos = async()=>{
-      let response = await fetch(base_api_route+'/videos')
-                           .catch((e)=>{console.log(e);});
+      let response = await fetch(base_api_route+'/videos',{
+        method:'GET',
+        headers:{
+          'Content-type' : "application/json",
+          'Authorization':`Bearer ${jwt_api_secret_key}`
+        }
+      })
+       .catch((e)=>{console.log(e);});
       if(response.ok){
         return await response.json();                    
       }                     
@@ -35,7 +42,6 @@ const VideoListingZone = ({header}) => {
 
         fetchVideos().then(result => {
             setVideos(result);
-
             if(videos.length > PLAYERS){
               setShowLabel('Show More');
               return;
@@ -46,9 +52,9 @@ const VideoListingZone = ({header}) => {
         });  
 
     },[]);
-
+  
+  if(videos !== undefined){  
     if(videos.length > 0){
-
       for(let i = 0;i<StreamWindows;i++){
         if(i < videos.length){
           Containers.push(<VideoPlayer key={i} url={videos[i].file} videoData={videos} useAsPlaceholder={false}/>)
@@ -56,8 +62,8 @@ const VideoListingZone = ({header}) => {
          Containers.push(<VideoPlayer key={i} useAsPlaceholder={true}/>)
         }
      }
-
     }
+  }
 
     return (
         <div className='VideoListingZone'>
