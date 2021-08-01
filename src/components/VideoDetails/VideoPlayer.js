@@ -1,7 +1,6 @@
 import ReactPlayer from 'react-player';
 
 const VideoPlayer = ({videoData, useAsPlaceholder, url}) => {
-
   if(useAsPlaceholder){
         return (
             <div className='player-wrapper'>
